@@ -1,11 +1,30 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import SummaryCards from '@/components/dashboard/summary-cards';
-import SpendingChart from '@/components/dashboard/spending-chart';
 import BudgetStatus from '@/components/dashboard/budget-status';
 import RecentExpenses from '@/components/dashboard/recent-expenses';
 import { useData } from '@/hooks/use-data';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+// Dynamically import the SpendingChart with a custom loading component
+const SpendingChart = dynamic(() => import('@/components/dashboard/spending-chart'), {
+  loading: () => (
+    <Card>
+      <CardHeader>
+        <CardTitle>Spending Overview</CardTitle>
+      </CardHeader>
+      <CardContent>
+         <div className="flex h-[300px] items-center justify-center">
+            <Skeleton className="h-full w-full" />
+        </div>
+      </CardContent>
+    </Card>
+  ),
+  ssr: false, // This chart is client-side only
+});
+
 
 export default function DashboardPage() {
   const { expenses, budgets, loading } = useData();
