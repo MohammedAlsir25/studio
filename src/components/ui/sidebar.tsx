@@ -248,7 +248,7 @@ const Sidebar = React.forwardRef<
         >
           <div
             data-sidebar="sidebar"
-            className="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-border group-data-[variant=floating]:shadow"
+            className="flex h-full w-full flex-col bg-background group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-border group-data-[variant=floating]:shadow"
           >
             {children}
           </div>
@@ -535,7 +535,7 @@ const sidebarMenuButtonVariants = cva(
 
 const SidebarMenuButton = React.forwardRef<
   HTMLButtonElement,
-  React.ComponentProps<"button"> & {
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
     asChild?: boolean,
     isActive?: boolean
     tooltip?: string | React.ComponentProps<typeof TooltipContent>
@@ -543,7 +543,7 @@ const SidebarMenuButton = React.forwardRef<
 >(
   (
     {
-      asChild = false,
+      asChild,
       isActive = false,
       variant = "default",
       size = "sm",
@@ -558,7 +558,7 @@ const SidebarMenuButton = React.forwardRef<
 
     const button = (
       <Comp
-        ref={ref as any}
+        ref={ref}
         data-sidebar="menu-button"
         data-size={size}
         data-active={isActive}

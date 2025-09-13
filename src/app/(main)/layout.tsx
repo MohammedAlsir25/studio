@@ -63,7 +63,7 @@ function MainLayoutContent({ children }: { children: ReactNode }) {
             <SidebarMenu>
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.href}>
-                  <Link href={item.href} asChild>
+                  <Link href={item.href} passHref asChild>
                     <SidebarMenuButton
                       isActive={pathname === item.href}
                       tooltip={item.label}
