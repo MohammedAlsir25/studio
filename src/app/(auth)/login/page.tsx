@@ -40,7 +40,7 @@ export default function LoginPage() {
         <span>WalletWise</span>
       </div>
       <Card className="w-full max-w-sm">
-        <CardHeader className="text-center">
+        <CardHeader>
           <CardTitle className="text-2xl font-bold tracking-tight">Welcome Back!</CardTitle>
           <CardDescription>Enter your credentials to access your dashboard.</CardDescription>
         </CardHeader>

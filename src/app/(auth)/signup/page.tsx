@@ -29,7 +29,7 @@ export default function SignUpPage() {
         <span>WalletWise</span>
       </div>
       <Card className="w-full max-w-sm">
-        <CardHeader className="text-center">
+        <CardHeader>
           <CardTitle className="text-2xl font-bold tracking-tight">Create an Account</CardTitle>
           <CardDescription>Enter your details below to get started.</CardDescription>
         </CardHeader>
@@ -46,6 +46,10 @@ export default function SignUpPage() {
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input id="password" type="password" required />
+            </div>
+             <div className="space-y-2">
+              <Label htmlFor="confirm-password">Confirm Password</Label>
+              <Input id="confirm-password" type="password" required />
             </div>
           </CardContent>
           <CardFooter className="flex-col gap-4">
