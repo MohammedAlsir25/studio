@@ -37,7 +37,7 @@ export default function LoginPage() {
         <Wallet />
         <span>PennyPincher</span>
       </div>
-      <Card className="w-full max-w-sm border-primary/20 bg-background/50 shadow-lg shadow-primary/10">
+      <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold tracking-tight">Welcome Back!</CardTitle>
           <CardDescription>Enter your credentials to access your dashboard.</CardDescription>
@@ -46,11 +46,11 @@ export default function LoginPage() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="user@email.com" defaultValue="user@email.com" required className="bg-background/70" />
+              <Input id="email" type="email" placeholder="user@email.com" defaultValue="user@email.com" required />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" defaultValue="password" required className="bg-background/70" />
+              <Input id="password" type="password" defaultValue="password" required />
             </div>
           </CardContent>
           <CardFooter>
