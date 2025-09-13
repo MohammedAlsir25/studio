@@ -2,6 +2,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { formatCurrency } from "@/lib/utils";
 import type { Expense, Budget, Category } from "@/lib/types";
+import { CATEGORY_COLORS } from "@/lib/colors";
 
 export default function BudgetStatus({ expenses, budgets }: { expenses: Expense[], budgets: Budget[] }) {
   const spendingByCategory = expenses.reduce((acc, expense) => {
@@ -12,7 +13,8 @@ export default function BudgetStatus({ expenses, budgets }: { expenses: Expense[
   const budgetStatus = budgets.map(budget => {
     const spent = spendingByCategory[budget.category] || 0;
     const progress = budget.amount > 0 ? (spent / budget.amount) * 100 : 0;
-    return { ...budget, spent, progress };
+    const color = CATEGORY_COLORS[budget.category] || "hsl(var(--primary))";
+    return { ...budget, spent, progress, color };
   });
 
   return (
@@ -29,7 +31,7 @@ export default function BudgetStatus({ expenses, budgets }: { expenses: Expense[
                 {formatCurrency(item.spent)} / {formatCurrency(item.amount)}
               </span>
             </div>
-            <Progress value={item.progress} />
+            <Progress value={item.progress} color={item.color} />
           </div>
         )) : <p className="text-muted-foreground">No budgets set.</p>}
       </CardContent>

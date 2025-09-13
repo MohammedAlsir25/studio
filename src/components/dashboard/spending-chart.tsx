@@ -6,16 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 import type { Expense, Category } from "@/lib/types";
 import { useMemo } from 'react';
-
-const CHART_COLORS = [
-  "hsl(var(--chart-1))",
-  "hsl(var(--chart-2))",
-  "hsl(var(--chart-3))",
-  "hsl(var(--chart-4))",
-  "hsl(var(--chart-5))",
-  "hsl(20, 80%, 55%)",
-  "hsl(150, 70%, 45%)",
-];
+import { CATEGORY_COLORS } from '@/lib/colors';
 
 const CustomLegend = ({ payload }: LegendProps) => {
   if (!payload) return null;
@@ -44,10 +35,10 @@ export default function SpendingChart({ expenses }: { expenses: Expense[] }) {
     }, {} as Record<Category, number>);
 
     return Object.entries(spendingByCategory)
-      .map(([name, value], index) => ({
+      .map(([name, value]) => ({
         name,
         value,
-        fill: CHART_COLORS[index % CHART_COLORS.length],
+        fill: CATEGORY_COLORS[name] || "hsl(var(--primary))",
       }))
       .sort((a, b) => b.value - a.value);
   }, [expenses]);
