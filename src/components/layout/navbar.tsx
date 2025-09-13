@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -26,7 +27,7 @@ export function Navbar() {
       <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
         <Link href="/dashboard" className="flex items-center gap-2 font-headline text-lg font-bold tracking-wider text-primary">
             <Wallet />
-            <span className="text-foreground">PennyPincher</span>
+            <span className="text-foreground">WalletWise</span>
         </Link>
         {menuItems.map((item) => (
           <Link
@@ -57,7 +58,7 @@ export function Navbar() {
           <nav className="grid gap-6 text-lg font-medium">
              <Link href="/dashboard" className="flex items-center gap-2 font-headline text-lg font-bold tracking-wider text-primary">
                 <Wallet />
-                <span className="text-foreground">PennyPincher</span>
+                <span className="text-foreground">WalletWise</span>
             </Link>
             {menuItems.map((item) => (
                 <Link

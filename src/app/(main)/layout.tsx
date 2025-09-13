@@ -1,3 +1,4 @@
+
 'use client';
 
 import type { ReactNode } from 'react';
@@ -20,7 +21,7 @@ function MainLayoutContent({ children }: { children: ReactNode }) {
   if (loading || !user) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-background">
-        <div className="text-2xl font-bold tracking-wider text-primary">Loading PennyPincher...</div>
+        <div className="text-2xl font-bold tracking-wider text-primary">Loading WalletWise...</div>
       </div>
     );
   }

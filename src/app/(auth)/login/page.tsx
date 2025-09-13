@@ -35,7 +35,7 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
        <div className="absolute top-8 flex items-center gap-2 font-headline text-2xl font-bold tracking-wider text-primary">
         <Wallet />
-        <span>PennyPincher</span>
+        <span>WalletWise</span>
       </div>
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">

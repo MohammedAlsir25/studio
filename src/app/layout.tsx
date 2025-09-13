@@ -1,3 +1,4 @@
+
 import type {Metadata} from 'next';
 import './globals.css';
 import { cn } from '@/lib/utils';
@@ -12,7 +13,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'PennyPincher',
+  title: 'WalletWise',
   description: 'Track your expenses with ease',
 };
 
