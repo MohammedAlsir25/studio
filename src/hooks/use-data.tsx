@@ -7,6 +7,8 @@ interface DataContextType {
   expenses: Expense[];
   budgets: Budget[];
   addExpense: (expense: Omit<Expense, 'id'>) => Promise<void>;
+  updateExpense: (expense: Expense) => Promise<void>;
+  deleteExpense: (expenseId: string) => Promise<void>;
   updateBudgets: (budgets: Budget[]) => Promise<void>;
   loading: boolean;
 }
@@ -70,6 +72,20 @@ export function DataProvider({ children }: { children: ReactNode }) {
     setExpenses(updatedExpenses);
     localStorage.setItem('expenses', JSON.stringify(updatedExpenses));
   };
+  
+  const updateExpense = async (updatedExpense: Expense) => {
+    const updatedExpenses = expenses.map(expense =>
+      expense.id === updatedExpense.id ? updatedExpense : expense
+    );
+    setExpenses(updatedExpenses);
+    localStorage.setItem('expenses', JSON.stringify(updatedExpenses));
+  };
+
+  const deleteExpense = async (expenseId: string) => {
+    const updatedExpenses = expenses.filter(expense => expense.id !== expenseId);
+    setExpenses(updatedExpenses);
+    localStorage.setItem('expenses', JSON.stringify(updatedExpenses));
+  };
 
   const updateBudgets = async (newBudgets: Budget[]) => {
     setBudgets(newBudgets);
@@ -80,6 +96,8 @@ export function DataProvider({ children }: { children: ReactNode }) {
     expenses: expenses.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
     budgets,
     addExpense,
+    updateExpense,
+    deleteExpense,
     updateBudgets,
     loading,
   };
