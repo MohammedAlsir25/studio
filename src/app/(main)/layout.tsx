@@ -56,7 +56,7 @@ function MainLayoutContent({ children }: { children: ReactNode }) {
           <SidebarHeader>
             <div className="flex items-center gap-2 p-2 font-headline text-lg font-bold tracking-wider text-primary">
               <Wallet />
-              <span className="text-sidebar-foreground">PennyPincher</span>
+              <span className="text-foreground">PennyPincher</span>
             </div>
           </SidebarHeader>
           <SidebarContent>
@@ -84,13 +84,13 @@ function MainLayoutContent({ children }: { children: ReactNode }) {
                 <AvatarFallback>U</AvatarFallback>
               </Avatar>
               <div className="flex flex-col text-sm">
-                  <span className="font-semibold text-sidebar-foreground">{user.name}</span>
+                  <span className="font-semibold text-foreground">{user.name}</span>
               </div>
             </div>
           </SidebarFooter>
         </Sidebar>
         <SidebarInset>
-          <header className="flex h-14 items-center justify-between border-b border-primary/10 bg-background/80 px-4 backdrop-blur-sm md:px-6">
+          <header className="flex h-14 items-center justify-between border-b bg-background/80 px-4 backdrop-blur-sm md:px-6">
             <SidebarTrigger />
             <AddExpenseDialog>
               <button className="inline-flex h-9 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-3 text-sm font-bold text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
@@ -115,5 +115,3 @@ export default function MainLayout({ children }: { children: ReactNode }) {
     </AuthProvider>
   );
 }
-
-    
