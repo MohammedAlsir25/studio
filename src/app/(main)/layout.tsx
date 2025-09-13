@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BarChart, LayoutDashboard, PiggyBank, Plus, ShoppingCart } from 'lucide-react';
+import { BarChart, LayoutDashboard, PiggyBank, Plus, Settings, ShoppingCart } from 'lucide-react';
 import type { ReactNode } from 'react';
 import {
   SidebarProvider,
@@ -19,16 +19,36 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { AddExpenseDialog } from '@/components/expenses/add-expense-dialog';
 import { DataProvider } from '@/hooks/use-data';
+import { AuthProvider, useAuth } from '@/hooks/use-auth';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/expenses', label: 'Expenses', icon: ShoppingCart },
   { href: '/budgets', label: 'Budgets', icon: PiggyBank },
   { href: '/reports', label: 'Reports', icon: BarChart },
+  { href: '/settings', label: 'Settings', icon: Settings },
 ];
 
-export default function MainLayout({ children }: { children: ReactNode }) {
+function MainLayoutContent({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
+    }
+  }, [user, loading, router]);
+  
+  if (loading || !user) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <div className="text-2xl font-bold">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <DataProvider>
@@ -64,8 +84,8 @@ export default function MainLayout({ children }: { children: ReactNode }) {
                 <AvatarFallback>U</AvatarFallback>
               </Avatar>
               <div className="flex flex-col text-sm">
-                  <span className="font-semibold text-sidebar-foreground">User</span>
-                  <span className="text-sidebar-foreground/70">user@email.com</span>
+                  <span className="font-semibold text-sidebar-foreground">{user.name}</span>
+                  <span className="text-sidebar-foreground/70">{user.email}</span>
               </div>
             </div>
           </SidebarFooter>
@@ -87,4 +107,12 @@ export default function MainLayout({ children }: { children: ReactNode }) {
       </SidebarProvider>
     </DataProvider>
   );
+}
+
+export default function MainLayout({ children }: { children: ReactNode }) {
+  return (
+    <AuthProvider>
+      <MainLayoutContent>{children}</MainLayoutContent>
+    </AuthProvider>
+  )
 }

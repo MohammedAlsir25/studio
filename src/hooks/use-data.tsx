@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode, useCallback } from 'react';
 import type { Expense, Budget } from '@/lib/types';
 
 interface DataContextType {
@@ -10,6 +10,7 @@ interface DataContextType {
   updateExpense: (expense: Expense) => Promise<void>;
   deleteExpense: (expenseId: string) => Promise<void>;
   updateBudgets: (budgets: Budget[]) => Promise<void>;
+  clearAllData: () => Promise<void>;
   loading: boolean;
 }
 
@@ -58,7 +59,6 @@ export function DataProvider({ children }: { children: ReactNode }) {
       }
     } catch (error) {
       console.error("Failed to load data from localStorage", error);
-      // Fallback to initial data if localStorage fails
       setExpenses(initialExpenses);
       setBudgets(initialBudgets);
     } finally {
@@ -92,6 +92,13 @@ export function DataProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('budgets', JSON.stringify(newBudgets));
   };
   
+  const clearAllData = useCallback(async () => {
+    setExpenses([]);
+    setBudgets([]);
+    localStorage.removeItem('expenses');
+    localStorage.removeItem('budgets');
+  }, []);
+
   const value = {
     expenses: expenses.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
     budgets,
@@ -99,6 +106,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
     updateExpense,
     deleteExpense,
     updateBudgets,
+    clearAllData,
     loading,
   };
 
