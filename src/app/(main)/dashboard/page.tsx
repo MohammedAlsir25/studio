@@ -6,7 +6,6 @@ import BudgetStatus from '@/components/dashboard/budget-status';
 import RecentExpenses from '@/components/dashboard/recent-expenses';
 import { useData } from '@/hooks/use-data';
 import { Skeleton } from '@/components/ui/skeleton';
-import WeeklySummary from '@/components/dashboard/weekly-summary';
 
 export default function DashboardPage() {
   const { expenses, budgets, loading } = useData();
@@ -31,13 +30,8 @@ export default function DashboardPage() {
             <Skeleton className="h-80 w-full" />
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <Skeleton className="h-96 w-full" />
-          </div>
-          <div>
-            <Skeleton className="h-96 w-full" />
-          </div>
+        <div className="lg:col-span-2">
+          <Skeleton className="h-96 w-full" />
         </div>
       </div>
     );
@@ -60,14 +54,9 @@ export default function DashboardPage() {
           <BudgetStatus expenses={expenses} budgets={budgets} />
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <RecentExpenses expenses={expenses.slice(0, 5)} />
+       <div className="lg:col-span-2">
+          <RecentExpenses expenses={expenses.slice(0, 10)} />
         </div>
-        <div>
-          <WeeklySummary />
-        </div>
-      </div>
     </div>
   );
 }
