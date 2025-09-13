@@ -43,8 +43,8 @@ function MainLayoutContent({ children }: { children: ReactNode }) {
   
   if (loading || !user) {
     return (
-      <div className="flex h-screen w-full items-center justify-center">
-        <div className="text-2xl font-bold">Loading...</div>
+      <div className="flex h-screen w-full items-center justify-center bg-background">
+        <div className="text-2xl font-bold tracking-wider text-primary">Loading PennyPincher...</div>
       </div>
     );
   }
@@ -54,8 +54,8 @@ function MainLayoutContent({ children }: { children: ReactNode }) {
       <SidebarProvider>
         <Sidebar>
           <SidebarHeader>
-            <div className="flex items-center gap-2 p-2 font-headline text-lg font-bold">
-              <Wallet className="text-primary" />
+            <div className="flex items-center gap-2 p-2 font-headline text-lg font-bold tracking-wider text-primary">
+              <Wallet />
               <span className="text-sidebar-foreground">PennyPincher</span>
             </div>
           </SidebarHeader>
@@ -63,7 +63,7 @@ function MainLayoutContent({ children }: { children: ReactNode }) {
             <SidebarMenu>
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.href}>
-                  <Link href={item.href} passHref>
+                  <Link href={item.href}>
                     <SidebarMenuButton
                       as="a"
                       isActive={pathname === item.href}
@@ -90,10 +90,10 @@ function MainLayoutContent({ children }: { children: ReactNode }) {
           </SidebarFooter>
         </Sidebar>
         <SidebarInset>
-          <header className="flex h-14 items-center justify-between border-b bg-background/80 px-4 backdrop-blur-sm md:px-6">
+          <header className="flex h-14 items-center justify-between border-b border-primary/10 bg-background/80 px-4 backdrop-blur-sm md:px-6">
             <SidebarTrigger />
             <AddExpenseDialog>
-              <button className="inline-flex h-9 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+              <button className="inline-flex h-9 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-3 text-sm font-bold text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
                 <Plus className="h-4 w-4" />
                 <span>Add Expense</span>
               </button>

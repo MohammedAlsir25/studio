@@ -44,7 +44,7 @@ export default function SettingsPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="font-headline text-3xl font-bold">Settings</h1>
+        <h1 className="font-headline text-4xl font-black tracking-tighter">Settings</h1>
         <p className="text-muted-foreground">Manage your account and application settings.</p>
       </div>
 
@@ -72,15 +72,15 @@ export default function SettingsPage() {
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <Label htmlFor="dark-mode" className="flex flex-col gap-1">
-              <span>Dark Mode</span>
+              <span>Theme</span>
               <span className="text-xs font-normal text-muted-foreground">
-                Enable or disable dark theme
+                Current theme is always dark for a futuristic feel
               </span>
             </Label>
             <Switch
               id="dark-mode"
-              checked={theme === 'dark'}
-              onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
+              checked={true}
+              disabled
             />
           </div>
         </CardContent>

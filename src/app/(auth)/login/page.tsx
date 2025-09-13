@@ -33,28 +33,28 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
-       <div className="absolute top-8 flex items-center gap-2 font-headline text-2xl font-bold">
-        <Wallet className="text-primary" />
+       <div className="absolute top-8 flex items-center gap-2 font-headline text-2xl font-bold tracking-wider text-primary">
+        <Wallet />
         <span>PennyPincher</span>
       </div>
-      <Card className="w-full max-w-sm">
+      <Card className="w-full max-w-sm border-primary/20 bg-background/50 shadow-lg shadow-primary/10">
         <CardHeader className="text-center">
-          <CardTitle>Welcome Back!</CardTitle>
-          <CardDescription>Enter your credentials to access your account.</CardDescription>
+          <CardTitle className="text-2xl font-bold tracking-tight">Welcome Back!</CardTitle>
+          <CardDescription>Enter your credentials to access your dashboard.</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="user@email.com" defaultValue="user@email.com" required />
+              <Input id="email" type="email" placeholder="user@email.com" defaultValue="user@email.com" required className="bg-background/70" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" defaultValue="password" required />
+              <Input id="password" type="password" defaultValue="password" required className="bg-background/70" />
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit" className="w-full" disabled={isPending}>
+            <Button type="submit" className="w-full font-bold" disabled={isPending}>
               {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Login
             </Button>

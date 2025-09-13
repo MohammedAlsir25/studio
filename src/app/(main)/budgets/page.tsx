@@ -11,7 +11,7 @@ export default function BudgetsPage() {
   return (
     <div className="flex flex-col gap-6">
        <div>
-        <h1 className="font-headline text-3xl font-bold">Budgets</h1>
+        <h1 className="font-headline text-4xl font-black tracking-tighter">Budgets</h1>
         <p className="text-muted-foreground">
           Create and manage your monthly budgets for each category.
         </p>

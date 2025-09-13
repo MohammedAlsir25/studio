@@ -13,7 +13,7 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="flex flex-col gap-6">
-        <h1 className="font-headline text-3xl font-bold">Dashboard</h1>
+        <h1 className="font-headline text-4xl font-black tracking-tighter">Dashboard</h1>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {Array.from({ length: 4 }).map((_, i) => (
             <Skeleton key={i} className="h-32 w-full" />
@@ -36,7 +36,7 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="font-headline text-3xl font-bold">Dashboard</h1>
+      <h1 className="font-headline text-4xl font-black tracking-tighter">Dashboard</h1>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         <SummaryCards expenses={expenses} />
       </div>

@@ -40,9 +40,9 @@ export default function ExpensesPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="font-headline text-3xl font-bold">Expenses</h1>
+        <h1 className="font-headline text-4xl font-black tracking-tighter">Expenses</h1>
         <p className="text-muted-foreground">
-          View, manage, and analyze your transactions.
+          View and manage all your transactions in one place.
         </p>
       </div>
 
