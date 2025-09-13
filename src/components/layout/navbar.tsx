@@ -21,11 +21,13 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 flex h-16 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-sm md:px-6">
-      <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-        <Link href="/dashboard" className="flex items-center gap-2 font-headline text-lg font-bold tracking-wider text-primary">
-            <Wallet />
-            <span className="text-foreground">WalletWise</span>
-        </Link>
+      <nav className="hidden w-full flex-col items-center gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+        <div className="mr-6 flex items-center">
+            <Link href="/dashboard" className="flex items-center gap-2 rounded-md bg-muted px-3 py-2 font-headline text-lg font-bold tracking-wider text-primary">
+                <Wallet />
+                <span className="text-foreground">WalletWise</span>
+            </Link>
+        </div>
         {menuItems.map((item) => (
           <Link
             key={item.href}
