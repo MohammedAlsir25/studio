@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useTransition } from 'react';
@@ -7,13 +8,13 @@ import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/use-auth';
-import { Loader2, PiggyBank } from 'lucide-react';
+import { Loader2, Wallet } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const [isPending, startTransition] = useTransition();
-  const { register, handleSubmit } = useForm();
+  const { handleSubmit } = useForm();
   const { login } = useAuth();
   const { toast } = useToast();
   const router = useRouter();
@@ -33,7 +34,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
        <div className="absolute top-8 flex items-center gap-2 font-headline text-2xl font-bold">
-        <PiggyBank className="text-primary" />
+        <Wallet className="text-primary" />
         <span>PennyPincher</span>
       </div>
       <Card className="w-full max-w-sm">

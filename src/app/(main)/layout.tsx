@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BarChart, LayoutDashboard, PiggyBank, Plus, Settings, ShoppingCart } from 'lucide-react';
+import { BarChart, LayoutDashboard, Wallet, Plus, Settings, ShoppingCart } from 'lucide-react';
 import type { ReactNode } from 'react';
 import {
   SidebarProvider,
@@ -26,7 +26,7 @@ import { useEffect } from 'react';
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/expenses', label: 'Expenses', icon: ShoppingCart },
-  { href: '/budgets', label: 'Budgets', icon: PiggyBank },
+  { href: '/budgets', label: 'Budgets', icon: Wallet },
   { href: '/reports', label: 'Reports', icon: BarChart },
   { href: '/settings', label: 'Settings', icon: Settings },
 ];
@@ -56,7 +56,7 @@ function MainLayoutContent({ children }: { children: ReactNode }) {
         <Sidebar>
           <SidebarHeader>
             <div className="flex items-center gap-2 p-2 font-headline text-lg font-bold">
-              <PiggyBank className="text-primary" />
+              <Wallet className="text-primary" />
               <span className="text-sidebar-foreground">PennyPincher</span>
             </div>
           </SidebarHeader>
@@ -85,7 +85,6 @@ function MainLayoutContent({ children }: { children: ReactNode }) {
               </Avatar>
               <div className="flex flex-col text-sm">
                   <span className="font-semibold text-sidebar-foreground">{user.name}</span>
-                  <span className="text-sidebar-foreground/70">{user.email}</span>
               </div>
             </div>
           </SidebarFooter>
