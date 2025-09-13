@@ -6,15 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { categories, type Budget } from "@/lib/types";
-import { updateBudgets } from "@/lib/actions";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import { useData } from "@/hooks/use-data";
 
 type FormValues = Record<string, number>;
 
 export default function BudgetForm({ budgets }: { budgets: Budget[] }) {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
+  const { updateBudgets } = useData();
 
   const defaultValues = categories.reduce((acc, category) => {
     const existingBudget = budgets.find(b => b.category === category);
@@ -26,15 +27,14 @@ export default function BudgetForm({ budgets }: { budgets: Budget[] }) {
 
   const onSubmit = (values: FormValues) => {
     startTransition(async () => {
-      const formData = new FormData();
-      for (const [key, value] of Object.entries(values)) {
-        formData.append(key, String(value));
-      }
-
-      const result = await updateBudgets(formData);
-      if (result.success) {
+      try {
+        const newBudgets: Budget[] = categories.map(category => ({
+          category,
+          amount: values[category] || 0
+        }));
+        await updateBudgets(newBudgets);
         toast({ title: "Budgets Updated", description: "Your budgets have been saved." });
-      } else {
+      } catch (error) {
         toast({ variant: 'destructive', title: "Error", description: "Failed to update budgets." });
       }
     });

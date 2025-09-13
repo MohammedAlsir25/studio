@@ -29,10 +29,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { categories, type Category } from "@/lib/types";
-import { addExpense, getCategorySuggestion } from "@/lib/actions";
+import { categories, type Category, type Expense } from "@/lib/types";
+import { getCategorySuggestion } from "@/lib/actions";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
+import { useData } from "@/hooks/use-data";
 
 const formSchema = z.object({
   description: z.string().min(1, "Description is required."),
@@ -48,6 +49,7 @@ export function AddExpenseDialog({ children }: { children: ReactNode }) {
   const [isPending, startTransition] = useTransition();
   const [isSuggesting, setIsSuggesting] = useState(false);
   const { toast } = useToast();
+  const { addExpense } = useData();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -74,18 +76,16 @@ export function AddExpenseDialog({ children }: { children: ReactNode }) {
 
   const onSubmit = (values: FormValues) => {
     startTransition(async () => {
-      const formData = new FormData();
-      formData.append("description", values.description);
-      formData.append("amount", values.amount.toString());
-      formData.append("category", values.category);
-      formData.append("date", values.date.toISOString());
-
-      const result = await addExpense(formData);
-      if (result?.success) {
+      try {
+        const newExpense: Omit<Expense, 'id'> = {
+            ...values,
+            date: values.date.toISOString(),
+        };
+        await addExpense(newExpense);
         toast({ title: "Expense Added", description: "Your expense has been successfully recorded." });
         setOpen(false);
         form.reset();
-      } else {
+      } catch (error) {
         toast({ variant: 'destructive', title: "Error", description: "Failed to add expense." });
       }
     });

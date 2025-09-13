@@ -1,12 +1,38 @@
-import { getExpenses, getBudgets } from '@/lib/actions';
+'use client';
+
 import SummaryCards from '@/components/dashboard/summary-cards';
 import SpendingChart from '@/components/dashboard/spending-chart';
 import BudgetStatus from '@/components/dashboard/budget-status';
 import RecentExpenses from '@/components/dashboard/recent-expenses';
+import { useData } from '@/hooks/use-data';
+import { Skeleton } from '@/components/ui/skeleton';
 
-export default async function DashboardPage() {
-  const expenses = await getExpenses();
-  const budgets = await getBudgets();
+export default function DashboardPage() {
+  const { expenses, budgets, loading } = useData();
+
+  if (loading) {
+    return (
+      <div className="flex flex-col gap-6">
+        <h1 className="font-headline text-3xl font-bold">Dashboard</h1>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Skeleton key={i} className="h-32 w-full" />
+          ))}
+        </div>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <Skeleton className="h-80 w-full" />
+          </div>
+          <div>
+            <Skeleton className="h-80 w-full" />
+          </div>
+        </div>
+        <div>
+          <Skeleton className="h-96 w-full" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-6">

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BarChart, Home, LayoutDashboard, Landmark, PiggyBank, Plus, Settings, ShoppingCart, Train, Utensils } from 'lucide-react';
+import { BarChart, LayoutDashboard, PiggyBank, Plus, ShoppingCart } from 'lucide-react';
 import type { ReactNode } from 'react';
 import {
   SidebarProvider,
@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { AddExpenseDialog } from '@/components/expenses/add-expense-dialog';
+import { DataProvider } from '@/hooks/use-data';
 
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -30,58 +31,60 @@ export default function MainLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <SidebarProvider>
-      <Sidebar>
-        <SidebarHeader>
-          <div className="flex items-center gap-2 p-2 font-headline text-lg font-bold">
-            <PiggyBank className="text-primary" />
-            <span className="text-sidebar-foreground">PennyPincher</span>
-          </div>
-        </SidebarHeader>
-        <SidebarContent>
-          <SidebarMenu>
-            {menuItems.map((item) => (
-              <SidebarMenuItem key={item.href}>
-                <Link href={item.href} legacyBehavior passHref>
-                  <SidebarMenuButton
-                    isActive={pathname === item.href}
-                    tooltip={item.label}
-                  >
-                    <item.icon />
-                    <span>{item.label}</span>
-                  </SidebarMenuButton>
-                </Link>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarContent>
-        <SidebarFooter>
-          <div className="flex items-center gap-2 p-2">
-            <Avatar className="h-8 w-8">
-              <AvatarImage src="https://picsum.photos/seed/user/40/40" alt="User" />
-              <AvatarFallback>U</AvatarFallback>
-            </Avatar>
-            <div className="flex flex-col text-sm">
-                <span className="font-semibold text-sidebar-foreground">User</span>
-                <span className="text-sidebar-foreground/70">user@email.com</span>
+    <DataProvider>
+      <SidebarProvider>
+        <Sidebar>
+          <SidebarHeader>
+            <div className="flex items-center gap-2 p-2 font-headline text-lg font-bold">
+              <PiggyBank className="text-primary" />
+              <span className="text-sidebar-foreground">PennyPincher</span>
             </div>
-          </div>
-        </SidebarFooter>
-      </Sidebar>
-      <SidebarInset>
-        <header className="flex h-14 items-center justify-between border-b bg-background/80 px-4 backdrop-blur-sm md:px-6">
-          <SidebarTrigger />
-          <AddExpenseDialog>
-            <button className="inline-flex h-9 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-              <Plus className="h-4 w-4" />
-              <span>Add Expense</span>
-            </button>
-          </AddExpenseDialog>
-        </header>
-        <main className="flex-1 overflow-y-auto p-4 md:p-6">
-          {children}
-        </main>
-      </SidebarInset>
-    </SidebarProvider>
+          </SidebarHeader>
+          <SidebarContent>
+            <SidebarMenu>
+              {menuItems.map((item) => (
+                <SidebarMenuItem key={item.href}>
+                  <Link href={item.href} legacyBehavior passHref>
+                    <SidebarMenuButton
+                      isActive={pathname === item.href}
+                      tooltip={item.label}
+                    >
+                      <item.icon />
+                      <span>{item.label}</span>
+                    </SidebarMenuButton>
+                  </Link>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarContent>
+          <SidebarFooter>
+            <div className="flex items-center gap-2 p-2">
+              <Avatar className="h-8 w-8">
+                <AvatarImage src="https://picsum.photos/seed/user/40/40" alt="User" />
+                <AvatarFallback>U</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col text-sm">
+                  <span className="font-semibold text-sidebar-foreground">User</span>
+                  <span className="text-sidebar-foreground/70">user@email.com</span>
+              </div>
+            </div>
+          </SidebarFooter>
+        </Sidebar>
+        <SidebarInset>
+          <header className="flex h-14 items-center justify-between border-b bg-background/80 px-4 backdrop-blur-sm md:px-6">
+            <SidebarTrigger />
+            <AddExpenseDialog>
+              <button className="inline-flex h-9 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+                <Plus className="h-4 w-4" />
+                <span>Add Expense</span>
+              </button>
+            </AddExpenseDialog>
+          </header>
+          <main className="flex-1 overflow-y-auto p-4 md:p-6">
+            {children}
+          </main>
+        </SidebarInset>
+      </SidebarProvider>
+    </DataProvider>
   );
 }

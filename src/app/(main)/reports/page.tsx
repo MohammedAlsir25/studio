@@ -1,8 +1,11 @@
-import { getExpenses } from "@/lib/actions";
-import ReportsView from "@/components/reports/reports-view";
+'use client';
 
-export default async function ReportsPage() {
-  const expenses = await getExpenses();
+import ReportsView from "@/components/reports/reports-view";
+import { useData } from "@/hooks/use-data";
+import { Skeleton } from "@/components/ui/skeleton";
+
+export default function ReportsPage() {
+  const { expenses, loading } = useData();
 
   return (
     <div className="flex flex-col gap-6">
@@ -12,7 +15,17 @@ export default async function ReportsPage() {
           Generate expense reports for specific date ranges.
         </p>
       </div>
-      <ReportsView allExpenses={expenses} />
+      {loading ? (
+        <div className="space-y-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <Skeleton className="h-10 w-[300px]" />
+            <Skeleton className="h-24 w-full sm:w-48" />
+          </div>
+          <Skeleton className="h-96 w-full" />
+        </div>
+      ) : (
+        <ReportsView allExpenses={expenses} />
+      )}
     </div>
   );
 }
