@@ -4,9 +4,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Wallet, Plus, LayoutDashboard, ShoppingCart, BarChart, Settings, Menu } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { AddExpenseDialog } from '@/components/expenses/add-expense-dialog';
-import { useAuth } from '@/hooks/use-auth';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
@@ -20,7 +18,6 @@ const menuItems = [
 
 export function Navbar() {
   const pathname = usePathname();
-  const { user } = useAuth();
 
   return (
     <header className="sticky top-0 z-40 flex h-16 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-sm md:px-6">
@@ -83,10 +80,6 @@ export function Navbar() {
                 Add Expense
             </Button>
         </AddExpenseDialog>
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="https://picsum.photos/seed/user/40/40" alt="User" />
-          <AvatarFallback>U</AvatarFallback>
-        </Avatar>
       </div>
     </header>
   );
