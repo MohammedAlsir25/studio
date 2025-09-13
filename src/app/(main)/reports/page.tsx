@@ -10,9 +10,9 @@ export default function ReportsPage() {
   return (
     <div className="flex flex-col gap-6">
        <div>
-        <h1 className="font-headline text-3xl font-bold">Reports</h1>
+        <h1 className="font-headline text-3xl font-bold">Expense Reports</h1>
         <p className="text-muted-foreground">
-          Generate expense reports for specific date ranges.
+          Analyze your spending by filtering expenses within a specific date range.
         </p>
       </div>
       {loading ? (

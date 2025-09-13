@@ -11,9 +11,9 @@ export default function ExpensesPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="font-headline text-3xl font-bold">Expenses</h1>
+        <h1 className="font-headline text-3xl font-bold">All Expenses</h1>
         <p className="text-muted-foreground">
-          View and manage all your expenses.
+          View, edit, and manage all of your recorded transactions.
         </p>
       </div>
       {loading ? (
