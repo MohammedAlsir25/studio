@@ -27,13 +27,14 @@ import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
-import { CalendarIcon, Loader2 } from "lucide-react";
+import { CalendarIcon, Loader2, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { categories, type Category, type Expense } from "@/lib/types";
-import { getCategorySuggestion } from "@/lib/actions";
+import { parseExpenseFromText } from "@/lib/actions";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
 import { useData } from "@/hooks/use-data";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   description: z.string().min(1, "Description is required."),
@@ -47,7 +48,8 @@ type FormValues = z.infer<typeof formSchema>;
 export function AddExpenseDialog({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const [isSuggesting, setIsSuggesting] = useState(false);
+  const [isParsing, setIsParsing] = useState(false);
+  const [textInput, setTextInput] = useState("");
   const { toast } = useToast();
   const { addExpense } = useData();
 
@@ -60,17 +62,22 @@ export function AddExpenseDialog({ children }: { children: ReactNode }) {
     },
   });
 
-  const handleDescriptionChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const description = e.target.value;
-    form.setValue("description", description);
-
-    if (description.length > 5) {
-      setIsSuggesting(true);
-      const result = await getCategorySuggestion(description);
-      if (result.category) {
-        form.setValue("category", result.category);
+  const handleParseExpense = async () => {
+    if (textInput.length < 3) return;
+    setIsParsing(true);
+    try {
+      const result = await parseExpenseFromText(textInput);
+      if (result) {
+        form.setValue("description", result.description);
+        form.setValue("amount", result.amount);
+        if (categories.includes(result.category as Category)) {
+          form.setValue("category", result.category as Category);
+        }
       }
-      setIsSuggesting(false);
+    } catch (error) {
+      toast({ variant: 'destructive', title: "AI Parsing Failed", description: "Could not understand the expense details." });
+    } finally {
+      setIsParsing(false);
     }
   };
 
@@ -85,6 +92,7 @@ export function AddExpenseDialog({ children }: { children: ReactNode }) {
         toast({ title: "Expense Added", description: "Your expense has been successfully recorded." });
         setOpen(false);
         form.reset();
+        setTextInput("");
       } catch (error) {
         toast({ variant: 'destructive', title: "Error", description: "Failed to add expense." });
       }
@@ -94,15 +102,31 @@ export function AddExpenseDialog({ children }: { children: ReactNode }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Add New Expense</DialogTitle>
+          <DialogTitle>Add New Expense with AI</DialogTitle>
           <DialogDescription>
-            Enter the details of your expense. The category will be suggested automatically.
+            Describe your expense in one sentence and let AI handle the rest.
           </DialogDescription>
         </DialogHeader>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="expense-text">Describe your expense</Label>
+            <Textarea
+              id="expense-text"
+              placeholder="e.g., 'Weekly groceries for $120.75'"
+              value={textInput}
+              onChange={(e) => setTextInput(e.target.value)}
+            />
+          </div>
+          <Button onClick={handleParseExpense} disabled={isParsing || textInput.length < 3} className="w-full">
+            {isParsing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+            Analyze with AI
+          </Button>
+        </div>
+
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-4 border-t">
             <FormField
               control={form.control}
               name="description"
@@ -110,7 +134,7 @@ export function AddExpenseDialog({ children }: { children: ReactNode }) {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. Coffee with a friend" {...field} onChange={handleDescriptionChange} />
+                    <Input placeholder="e.g. Coffee with a friend" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -135,7 +159,7 @@ export function AddExpenseDialog({ children }: { children: ReactNode }) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="flex items-center gap-2">
-                    Category {isSuggesting && <Loader2 className="h-4 w-4 animate-spin" />}
+                    Category
                   </FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>

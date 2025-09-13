@@ -3,6 +3,7 @@
 import { z } from 'zod'
 import { categorizeExpenseWithAI } from '@/ai/flows/categorize-expense-with-ai'
 import { generateWeeklySummary } from '@/ai/flows/generate-weekly-summary'
+import { parseExpenseFromText as parseExpenseFromTextAI, type ParseExpenseOutput } from '@/ai/flows/parse-expense-from-text'
 import type { Category, Expense } from './types'
 import { categories } from './types'
 
@@ -34,4 +35,20 @@ export async function getWeeklySummary(expenses: Expense[]): Promise<{ summary: 
     console.error('AI weekly summary generation failed:', error);
     throw new Error('Failed to generate weekly summary.');
   }
+}
+
+export async function parseExpenseFromText(text: string): Promise<ParseExpenseOutput | null> {
+    if (text.length < 3) {
+        return null;
+    }
+    try {
+        const result = await parseExpenseFromTextAI({ text });
+        if (result.category && !categories.includes(result.category as Category)) {
+            result.category = 'Other';
+        }
+        return result;
+    } catch (error) {
+        console.error('AI expense parsing failed:', error);
+        return null;
+    }
 }
