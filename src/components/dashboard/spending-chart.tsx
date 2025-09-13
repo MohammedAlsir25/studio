@@ -1,31 +1,12 @@
 
 'use client'
 
-import { RadialBarChart, RadialBar, Legend, Tooltip, ResponsiveContainer, LegendProps } from 'recharts';
+import { RadialBarChart, RadialBar, Tooltip, ResponsiveContainer } from 'recharts';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 import type { Expense, Category } from "@/lib/types";
 import { useMemo } from 'react';
 import { CATEGORY_COLORS } from '@/lib/colors';
-
-const CustomLegend = ({ payload }: LegendProps) => {
-  if (!payload) return null;
-
-  return (
-    <ul className="flex flex-col gap-2">
-      {payload.map((entry, index) => {
-        const { color, value } = entry;
-        return (
-          <li key={`item-${index}`} className="flex items-center gap-2 text-sm">
-            <span className="h-2 w-2 rounded-full" style={{ backgroundColor: color }} />
-            <span className="text-muted-foreground">{value}</span>
-          </li>
-        );
-      })}
-    </ul>
-  );
-};
-
 
 export default function SpendingChart({ expenses }: { expenses: Expense[] }) {
   const chartData = useMemo(() => {
@@ -77,14 +58,6 @@ export default function SpendingChart({ expenses }: { expenses: Expense[] }) {
                 <RadialBar 
                   background 
                   dataKey='value'
-                />
-                 <Legend
-                  iconSize={10}
-                  layout="vertical"
-                  verticalAlign="middle"
-                  align="right"
-                  content={<CustomLegend />}
-                  wrapperStyle={{ right: -20, top: '50%', transform: 'translateY(-50%)' }}
                 />
               </RadialBarChart>
             </ResponsiveContainer>
