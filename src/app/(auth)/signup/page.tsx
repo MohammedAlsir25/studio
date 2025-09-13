@@ -23,8 +23,8 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
-      <div className="absolute top-8 flex items-center gap-2 font-headline text-2xl font-bold tracking-wider text-primary">
+    <div className="flex min-h-screen flex-col items-center justify-center gap-8 bg-background p-4">
+      <div className="flex items-center gap-2 font-headline text-2xl font-bold tracking-wider text-primary">
         <Wallet />
         <span>WalletWise</span>
       </div>
