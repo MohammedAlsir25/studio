@@ -26,7 +26,7 @@ import { useEffect } from 'react';
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/expenses', label: 'Expenses', icon: ShoppingCart },
-  { href: '/budgets', label: 'Budgets', icon: Wallet },
+  { href: '/budgets', label: 'Budgets', icon: BarChart },
   { href: '/settings', label: 'Settings', icon: Settings },
 ];
 
@@ -63,7 +63,7 @@ function MainLayoutContent({ children }: { children: ReactNode }) {
             <SidebarMenu>
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.href}>
-                  <Link href={item.href} legacyBehavior={false} passHref>
+                  <Link href={item.href} passHref>
                     <SidebarMenuButton
                       as="a"
                       isActive={pathname === item.href}
