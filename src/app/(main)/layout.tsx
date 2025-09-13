@@ -113,5 +113,5 @@ export default function MainLayout({ children }: { children: ReactNode }) {
     <AuthProvider>
       <MainLayoutContent>{children}</MainLayoutContent>
     </AuthProvider>
-  )
+  );
 }
