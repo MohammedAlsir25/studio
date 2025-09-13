@@ -5,7 +5,6 @@ import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
 import { useAuth } from '@/hooks/use-auth';
 import { useData } from '@/hooks/use-data';
 import {
@@ -20,6 +19,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Monitor, Moon, Sun } from 'lucide-react';
 
 export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
@@ -74,14 +75,34 @@ export default function SettingsPage() {
             <Label htmlFor="dark-mode" className="flex flex-col gap-1">
               <span>Theme</span>
               <span className="text-xs font-normal text-muted-foreground">
-                Current theme is always dark for a futuristic feel
+                Select your preferred color scheme.
               </span>
             </Label>
-            <Switch
-              id="dark-mode"
-              checked={true}
-              disabled
-            />
+             <Select value={theme} onValueChange={setTheme}>
+                <SelectTrigger className="w-36">
+                    <SelectValue placeholder="Select theme" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="light">
+                        <div className="flex items-center gap-2">
+                            <Sun className="size-4" />
+                            <span>Light</span>
+                        </div>
+                    </SelectItem>
+                    <SelectItem value="dark">
+                        <div className="flex items-center gap-2">
+                            <Moon className="size-4" />
+                            <span>Dark</span>
+                        </div>
+                    </SelectItem>
+                    <SelectItem value="system">
+                        <div className="flex items-center gap-2">
+                            <Monitor className="size-4" />
+                            <span>System</span>
+                        </div>
+                    </SelectItem>
+                </SelectContent>
+            </Select>
           </div>
         </CardContent>
       </Card>
